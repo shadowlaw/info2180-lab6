@@ -48,3 +48,9 @@ body{
 #main, #overall, #pagetitle{
     margin: auto;
 }
+
+div > .example{
+    font-style: italic;
+    font-size: 12px;
+    color: #515050;
+}
