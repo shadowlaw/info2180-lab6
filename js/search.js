@@ -45,12 +45,14 @@ function main(){
     
     submit.onclick = function(event){
         event.preventDefault();
-        ajax_word_query(document.getElementsByName("q")[0].value.toLowerCase(),false);
+        ajax_word_query(document.getElementsByName("q")[0].value.trim().toLowerCase(),false);
+        document.getElementsByName("q")[0].value = "";
     };
     
     submitAll.onclick = function(event){
         event.preventDefault();
         ajax_word_query('', true);
+        document.getElementsByName("q")[0].value = "";
     }
     
 }
