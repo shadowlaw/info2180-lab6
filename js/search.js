@@ -7,8 +7,11 @@ function ajax_word_query(word, all){
     httpRequest.onreadystatechange = function(){
         if(httpRequest.readyState === XMLHttpRequest.DONE ){
             if(httpRequest.status === 200){
-                let response = httpRequest.responseText;
-                update_results(response);
+                if(all){
+                   parse_xml_result(httpRequest.responseXML); 
+                }else{
+                    update_word_results(httpRequest.responseText);
+                }
             }else{
                 alert("There was some error");
             }
@@ -19,7 +22,20 @@ function ajax_word_query(word, all){
     httpRequest.send();
 }
 
-function update_results(response){
+function parse_xml_result(response){
+    let definitions = response.documentElement.children;
+    let results = "<ol>";
+    
+    for(var i = 0; i < definitions.length; i++){
+        results+=`<li><h3>${definitions[i].attributes[0].value.toUpperCase()}</h3><p>${definitions[i].innerHTML.trim()}</p><p> - ${definitions[i].attributes[1].value}</p></li>`;
+    }
+    
+    results+= "</ol>"
+    
+    update_word_results(results)
+}
+
+function update_word_results(response){
     document.getElementById("update").innerHTML = response;
 }
 
