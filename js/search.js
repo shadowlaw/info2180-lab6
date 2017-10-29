@@ -1,8 +1,8 @@
 window.onload = main;
 
-function ajax_word_query(word){
+function ajax_word_query(word, all){
     let httpRequest = new XMLHttpRequest();
-    let url = "/request.php?q="+word
+    let url = `/request.php?q=${word}&all=${all}`;
     
     httpRequest.onreadystatechange = function(){
         if(httpRequest.readyState === XMLHttpRequest.DONE ){
@@ -25,9 +25,16 @@ function update_results(response){
 
 function main(){
     let submit = $("#submission")[0];
+    let submitAll = $("#all")[0];
+    
     submit.onclick = function(event){
         event.preventDefault();
-        ajax_word_query(document.getElementsByName("q")[0].value.toLowerCase());
+        ajax_word_query(document.getElementsByName("q")[0].value.toLowerCase(),false);
     };
+    
+    submitAll.onclick = function(event){
+        event.preventDefault();
+        ajax_word_query('', true);
+    }
     
 }
